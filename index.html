@@ -3,8 +3,10 @@
 <head>
     <title>MCStellar Production</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
         body {
-            font-family: sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -15,7 +17,7 @@
         }
 
         header, section, footer {
-            width: 90%; /* Ajuste para celulares */
+            width: 95%; /* Más ancho para celulares */
             max-width: 800px;
             margin: 20px 0;
             padding: 20px;
@@ -24,21 +26,39 @@
             text-align: center;
         }
 
+        nav {
+            background-color: white;
+            border-radius: 20px;
+            padding: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
         nav ul {
             list-style: none;
             padding: 0;
             display: flex;
-            flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
-            justify-content: center;
+            justify-content: space-around;
         }
 
         nav li {
-            margin: 5px 10px; /* Ajuste de margen */
+            margin: 0;
         }
 
-        a {
+        nav a {
             text-decoration: none;
             color: #1a73e8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        nav img {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 5px;
         }
 
         .proyecto {
@@ -51,26 +71,37 @@
         /* Media query para pantallas más grandes (computadoras) */
         @media (min-width: 600px) {
             header, section, footer {
-                width: 80%; /* Ajuste para computadoras */
+                width: 70%; /* Menos ancho para computadoras */
             }
 
-            nav ul {
-                flex-wrap: nowrap; /* Evita que los elementos se envuelvan en pantallas grandes */
+            nav {
+                position: sticky;
+                top: 20px;
+                margin: 20px auto;
+            }
+        }
+
+        /* Media query para celulares */
+        @media (max-width: 599px) {
+            nav {
+                position: fixed;
+                bottom: 20px;
+                margin: 0 auto;
             }
         }
     </style>
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="#inicio"><img src="home-icon.png" alt="Home">Inicio</a></li>
+            <li><a href="#noticias"><img src="news-icon.png" alt="Noticias">Noticias</a></li>
+            <li><a href="#social"><img src="social-icon.png" alt="Social Media">Social Media</a></li>
+        </ul>
+    </nav>
+
     <header>
         <h1>MCStellar Production</h1>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#servicios">Servicios</a></li>
-                <li><a href="#proyectos">Proyectos</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </nav>
     </header>
 
     <section id="inicio">
