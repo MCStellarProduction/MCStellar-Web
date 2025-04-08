@@ -11,32 +11,34 @@
             justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #f0f0f0; /* Un fondo gris claro */
+            background-color: #f0f0f0;
         }
 
         header, section, footer {
-            width: 80%;
+            width: 90%; /* Ajuste para celulares */
             max-width: 800px;
             margin: 20px 0;
             padding: 20px;
             background-color: white;
-            border-radius: 10px; /* Bordes redondeados */
+            border-radius: 10px;
             text-align: center;
         }
 
         nav ul {
             list-style: none;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+            justify-content: center;
         }
 
         nav li {
-            display: inline;
-            margin: 0 10px;
+            margin: 5px 10px; /* Ajuste de margen */
         }
 
         a {
             text-decoration: none;
-            color: #1a73e8; /* Color azul de Google */
+            color: #1a73e8;
         }
 
         .proyecto {
@@ -44,6 +46,17 @@
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
+        }
+
+        /* Media query para pantallas más grandes (computadoras) */
+        @media (min-width: 600px) {
+            header, section, footer {
+                width: 80%; /* Ajuste para computadoras */
+            }
+
+            nav ul {
+                flex-wrap: nowrap; /* Evita que los elementos se envuelvan en pantallas grandes */
+            }
         }
     </style>
 </head>
