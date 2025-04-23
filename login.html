@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login</title>
-  <!-- Google Material Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
@@ -13,9 +12,7 @@
       src: url('Retro Floral.ttf') format('truetype');
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -55,7 +52,6 @@
       border-radius: 12px;
       outline: none;
       font-size: 1em;
-      background: #fff;
     }
 
     .input-group .material-icons {
@@ -87,35 +83,54 @@
         margin: 0 20px;
         padding: 20px;
       }
-
-      .login-btn {
-        font-size: 1em;
-      }
     }
   </style>
 </head>
 <body>
   <div class="login-container">
     <h2>Login</h2>
-    <form onsubmit="handleLogin(event)">
+    <form id="loginForm">
       <div class="input-group">
         <span class="material-icons">person</span>
-        <input type="text" placeholder="Username" required>
+        <input type="text" id="username" placeholder="Username" required />
       </div>
       <div class="input-group">
         <span class="material-icons">lock</span>
-        <input type="password" placeholder="Password" required>
+        <input type="password" id="password" placeholder="Password" required />
       </div>
       <button type="submit" class="login-btn">Login</button>
     </form>
   </div>
 
   <script>
-    function handleLogin(event) {
-      event.preventDefault();
-      alert("Logging in...");
-      // You can redirect or process form data here
+    // Redirige automáticamente si ya está logueado
+    if (document.cookie.includes("loggedIn=true")) {
+      window.location.href = "https://www.mcstellar.lat/home";
     }
+
+    document.getElementById("loginForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      try {
+        const response = await fetch("accounts.json");
+        const accounts = await response.json();
+
+        const user = accounts.find(acc => acc.username === username && acc.password === password);
+
+        if (user) {
+          document.cookie = "loggedIn=true; path=/; max-age=604800"; // 7 days
+          document.cookie = `username=${username}; path=/; max-age=604800`;
+          window.location.href = "https://www.mcstellar.lat/home";
+        } else {
+          alert("Invalid credentials!");
+        }
+      } catch (error) {
+        console.error("Error loading accounts:", error);
+        alert("Could not load user data.");
+      }
+    });
   </script>
 </body>
 </html>
