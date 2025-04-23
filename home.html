@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Portal</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Retro Floral';
+      src: url('Retro Floral.ttf') format('truetype');
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Retro Floral', sans-serif;
+      background-color: #fdfdfd;
+      color: #111;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: #fff;
+      border-bottom: 2px solid #ff6a00;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
+
+    header img {
+      height: 40px;
+    }
+
+    main {
+      padding-top: 80px;
+      display: grid;
+      place-items: center;
+      gap: 20px;
+    }
+
+    .event-block {
+      width: 90%;
+      max-width: 600px;
+      aspect-ratio: 16/9;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(255, 106, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .event-block:hover {
+      transform: scale(1.02);
+    }
+
+    .event-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .event-info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px 15px;
+      border-top: 2px solid #000;
+    }
+
+    .event-title {
+      font-size: 1.1em;
+      color: #ff6a00;
+      margin-bottom: 5px;
+    }
+
+    .event-date {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 3px;
+    }
+
+    .event-desc {
+      font-size: 0.85em;
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .event-block {
+        width: 100%;
+        border-radius: 0;
+      }
+
+      .event-info {
+        padding: 8px 10px;
+      }
+
+      .event-title {
+        font-size: 1em;
+      }
+
+      .event-date, .event-desc {
+        font-size: 0.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="imagen_custom.png" alt="Logo" />
+  </header>
+
+  <main>
+    <!-- EVENT BLOCK EXAMPLE -->
+    <div class="event-block" onclick="redirectWithAnimation(this, 'LINK_CUSTOM')">
+      <img src="evento1.jpg" alt="Event Image" />
+      <div class="event-info">
+        <div class="event-title">Epic Tournament</div>
+        <div class="event-date">April 27, 2025</div>
+        <div class="event-desc">Join us for an electrifying 5v5 battle!</div>
+      </div>
+    </div>
+
+    <!-- Add more blocks by copying the above -->
+  </main>
+
+  <script>
+    function redirectWithAnimation(el, url) {
+      el.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+      el.style.transform = "scale(0.95)";
+      el.style.opacity = "0.5";
+
+      setTimeout(() => {
+        window.location.href = url;
+      }, 300);
+    }
+  </script>
+</body>
+</html>
