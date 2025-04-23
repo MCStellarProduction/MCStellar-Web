@@ -125,16 +125,15 @@
     <img src="imagen_custom.png" alt="Logo" />
   </header>
 
-  <main>
-    <div id="welcomeMessage"></div>
-    
+  <main>   
     <!-- EVENT BLOCK EXAMPLE -->
     <div class="event-block" onclick="redirectWithAnimation(this, 'LINK_CUSTOM')">
       <img src="evento1.jpg" alt="Event Image" />
       <div class="event-info">
-        <div class="event-title">Epic Tournament</div>
-        <div class="event-date">April 27, 2025</div>
-        <div class="event-desc">Join us for an electrifying 5v5 battle!</div>
+        <div class="event-title">REDSURVIVAL</div>
+        <div class="event-date">COOMING SOON 2026</div>
+        <div class="event-desc">Creators: Sharingel, RedAguilar</div>
+        <div id="welcomeMessage"></div>
       </div>
     </div>
 
@@ -156,6 +155,12 @@
     window.location.href = `${currentUrl}?user=${encodeURIComponent(username)}`;
   }
 
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
   // Redirigir si ya hay una cookie
   if (document.cookie.includes("username")) {
     redirectWithUsername(); // Añadir el nombre de usuario a la URL
@@ -165,9 +170,11 @@
   window.onload = function() {
     const urlParams = new URLSearchParams(window.location.search);
     const username = urlParams.get('user');
+    const username = getCookie("username") || "guest";
+    document.title = `Home • ${username}`;
 
     if (username) {
-      document.getElementById("welcomeMessage").innerText = `Welcome, ${username}!`;
+      document.getElementById("welcomeMessage").innerText = `You are Invited to this event, ${username}!!`;
     }
   };
   </script>
