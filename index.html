@@ -1,111 +1,57 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gamer Launcher</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loading...</title>
   <style>
-    * {
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Orbitron', sans-serif;
-    }
-
-    body, html {
-      height: 100%;
-      overflow: hidden;
-      background-color: #0f0f0f;
-      color: #fff;
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -1;
-    }
-
-    .launcher {
+      height: 100vh;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100%;
-      gap: 30px;
-      backdrop-filter: blur(10px);
+      align-items: center;
+      background-color: #0f0f0f;
     }
 
-    .title {
-      font-size: 3em;
-      color: #00ffd5;
-      text-shadow: 0 0 10px #00ffd5;
-      transition: all 0.3s ease;
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 255, 255, 0.1);
+      border-top-color: #00ffd5;
+      border-radius: 50%;
+      animation: spin 1s ease-in-out infinite;
     }
 
-    .button {
-      padding: 15px 40px;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .text {
+      position: absolute;
+      top: 70%;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
       font-size: 1.2em;
-      background: linear-gradient(135deg, #00ffd5, #007fff);
-      border: none;
-      border-radius: 10px;
-      color: #000;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(0, 255, 213, 0.6);
-      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      opacity: 0.7;
+      animation: fadein 2s ease-in-out infinite alternate;
     }
 
-    .button:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(0, 255, 213, 0.9);
+    @keyframes fadein {
+      from { opacity: 0.4; }
+      to   { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <div class="launcher">
-    <h1 class="title">GAMER LAUNCHER</h1>
-    <button class="button" onclick="launchGame()">Iniciar Juego</button>
-  </div>
+  <div class="loader"></div>
+  <div class="text">Loading...</div>
 
-  <!-- Three.js para WebGL -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
   <script>
-    // Configurar escena 3D de fondo
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
-    const material = new THREE.MeshStandardMaterial({ color: 0x00ffd5, wireframe: true });
-    const knot = new THREE.Mesh(geometry, material);
-    scene.add(knot);
-
-    const light = new THREE.PointLight(0x00ffd5, 1, 100);
-    light.position.set(50, 50, 50);
-    scene.add(light);
-
-    camera.position.z = 30;
-
-    const animate = () => {
-      requestAnimationFrame(animate);
-      knot.rotation.x += 0.005;
-      knot.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    function launchGame() {
-      alert("Iniciando juego... (aquí se integraría el juego o el ejecutable)");
-      // Aquí podrías integrar una llamada a una app Electron, API o juego
-    }
+    setTimeout(() => {
+      window.location.href = "https://www.mcstellar.lat/home";
+    }, 2000);
   </script>
 </body>
 </html>
