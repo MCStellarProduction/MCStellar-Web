@@ -1,187 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Event Portal</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    @font-face {
-      font-family: 'Retro Floral';
-      src: url('Retro Floral.ttf') format('truetype');
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Event Portal</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Retro Floral';
+      src: url('Retro Floral.ttf') format('truetype');
+    }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    body {
-      font-family: 'Retro Floral', sans-serif;
-      background-color: #fdfdfd;
-      color: #111;
-    }
+    body {
+      font-family: 'Retro Floral', sans-serif;
+      background-color: #fdfdfd;
+      color: #111;
+    }
 
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100px;
-      background-color: #fff;
-      border-bottom: 2px solid #ff6a00;
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      z-index: 1000;
-    }
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background-color: #fff;
+      border-bottom: 2px solid #ff6a00;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 1000;
+    }
 
-    header img {
-      height: 60px;
-      width: auto;
-    }
+    header img {
+      height: 200px;
+      width: auto;
+      align-items: center;
+    }
 
-    main {
-      padding-top: 120px;
-      display: grid;
-      place-items: center;
-      gap: 20px;
-    }
+    main {
+      padding-top: 80px;
+      display: grid;
+      place-items: center;
+      gap: 20px;
+    }
 
-    #welcomeMessage {
-      font-size: 1.2em;
-      color: #ff6a00;
-      margin-bottom: 10px;
-    }
+    .event-block {
+      width: 90%;
+      max-width: 600px;
+      aspect-ratio: 16/9;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(255, 106, 0, 0.2);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
 
-    .event-block {
-      width: 90%;
-      max-width: 600px;
-      aspect-ratio: 16/9;
-      background-color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 10px rgba(255, 106, 0, 0.2);
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+    .event-block:hover {
+      transform: scale(1.02);
+    }
 
-    .event-block:hover {
-      transform: scale(1.02);
-    }
+    .event-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-    .event-block img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    .event-info {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px 15px;
+      border-top: 2px solid #000;
+    }
 
-    .event-info {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 10px 15px;
-      border-top: 2px solid #000;
-    }
+    .event-title {
+      font-size: 1.1em;
+      color: #ff6a00;
+      margin-bottom: 5px;
+    }
 
-    .event-title {
-      font-size: 1.1em;
-      color: #ff6a00;
-      margin-bottom: 5px;
-    }
+    .event-date {
+      font-size: 0.9em;
+      color: #333;
+      margin-bottom: 3px;
+    }
 
-    .event-date {
-      font-size: 0.9em;
-      color: #333;
-      margin-bottom: 3px;
-    }
+    .event-desc {
+      font-size: 0.85em;
+      color: #555;
+    }
 
-    .event-desc {
-      font-size: 0.85em;
-      color: #555;
-    }
+    @media (max-width: 600px) {
+      .event-block {
+        width: 100%;
+        border-radius: 0;
+      }
 
-    @media (max-width: 600px) {
-      .event-block {
-        width: 100%;
-        border-radius: 0;
-      }
+      .event-info {
+        padding: 8px 10px;
+      }
 
-      .event-info {
-        padding: 8px 10px;
-      }
+      .event-title {
+        font-size: 1em;
+      }
 
-      .event-title {
-        font-size: 1em;
-      }
-
-      .event-date, .event-desc {
-        font-size: 0.8em;
-      }
-    }
-  </style>
+      .event-date, .event-desc {
+        font-size: 0.8em;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <header>
-    <img src="imagen_custom.png" alt="Logo" />
-  </header>
+  <header>
+    <img src="imagen_custom.png" alt="Logo" />
+  </header>
 
-  <main>
-    <div id="welcomeMessage">Loading user...</div>
+  <main>   
+    <!-- EVENT BLOCK EXAMPLE -->
+    <div class="event-block" onclick="redirectWithAnimation(this, 'LINK_CUSTOM')">
+      <img src="evento1.jpg" alt="Event Image" />
+      <div class="event-info">
+        <div class="event-title">REDSURVIVAL</div>
+        <div class="event-date">COOMING SOON 2026</div>
+        <div class="event-desc">Creators: Sharingel, RedAguilar</div>
+      </div>
+    </div>
 
-    <div class="event-block" onclick="redirectWithAnimation(this, 'LINK_CUSTOM')">
-      <img src="evento1.jpg" alt="Event Image" />
-      <div class="event-info">
-        <div class="event-title">REDSURVIVAL</div>
-        <div class="event-date">COMING SOON 2026</div>
-        <div class="event-desc">Creators: Sharingel, RedAguilar</div>
-      </div>
-    </div>
-  </main>
+    <!-- Add more blocks by copying the above -->
+  </main>
 
-  <script>
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
+  <script>
+  // Función para obtener una cookie
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
 
-    function redirectWithUsername() {
-      const username = getCookie("username") || "guest";
-      const currentUrl = window.location.href;
-      const hasUser = currentUrl.includes("?user=");
-      if (!hasUser) {
-        const cleanUrl = window.location.href.split("?")[0];
-        window.location.href = `${cleanUrl}?user=${encodeURIComponent(username)}`;
-      }
-    }
+  // Redirigir al usuario con el nombre de la cookie
+  function redirectWithUsername() {
+    const username = getCookie("username") || "guest";
+    const currentUrl = window.location.href.split('?')[0]; // Eliminar cualquier query existente
+    window.location.href = `${currentUrl}?user=${encodeURIComponent(username)}`;
+  }
 
-    if (document.cookie.includes("username")) {
-      redirectWithUsername();
-    }
+  // Redirigir si ya hay una cookie
+  if (document.cookie.includes("username")) {
+    redirectWithUsername(); // Añadir el nombre de usuario a la URL
+  }
 
-    window.onload = function() {
-      const params = new URLSearchParams(window.location.search);
-      const username = params.get("user") || "guest";
-      document.getElementById("welcomeMessage").innerText = `You are invited to this event, ${username}!!`;
-      document.title = `Home • ${username}`;
-    };
+  // Verificar si ya estamos logueados y mostrar información si es necesario
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('user');
 
-    function redirectWithAnimation(el, baseUrl) {
-      const username = getCookie("username") || "guest";
-      const url = `${baseUrl}?user=${encodeURIComponent(username)}`;
-      el.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-      el.style.transform = "scale(0.95)";
-      el.style.opacity = "0.5";
-
-      setTimeout(() => {
-        window.location.href = url;
-      }, 300);
-    }
-  </script>
+    if (username) {
+      document.getElementById("welcomeMessage").innerText = `You are Invited to this event, ${username}!!`;
+    }
+  };
+  </script>
 </body>
 </html>
