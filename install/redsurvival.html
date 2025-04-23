@@ -1,151 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Installer</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <style>
-    @font-face {
-      font-family: 'Retro Floral';
-      src: url('../Retro Floral.ttf') format('truetype');
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installer</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Retro Floral';
+      src: url('Retro Floral.ttf') format('truetype');
+    }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    body {
-      font-family: 'Retro Floral', sans-serif;
-      background: url('background.jpg') no-repeat center center/cover;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-    }
+    body {
+      font-family: 'Retro Floral', sans-serif;
+      background: url('background.jpg') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
 
-    .installer-container {
-      width: 90vw;
-      max-width: 700px;
-      height: 60vh;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border: 2px solid white;
-      border-radius: 20px;
-      padding: 40px 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      text-align: center;
-    }
+    .installer-container {
+      width: 90vw;
+      max-width: 700px;
+      height: 60vh;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 2px solid white;
+      border-radius: 20px;
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      text-align: center;
+    }
 
-    h1 {
-      font-size: 2.5em;
-      color: #fff;
-      text-shadow: 1px 1px 5px #ff6a00;
-    }
+    h1 {
+      font-size: 2.5em;
+      color: #fff;
+      text-shadow: 1px 1px 5px #ff6a00;
+    }
 
-    p {
-      font-size: 1.2em;
-      color: #eee;
-      margin-top: 10px;
-    }
+    p {
+      font-size: 1.2em;
+      color: #eee;
+      margin-top: 10px;
+    }
 
-    button {
-      background-color: #ff6a00;
-      border: none;
-      color: white;
-      padding: 15px 30px;
-      font-size: 1em;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 30px;
-      transition: background 0.3s;
-    }
+    button {
+      background-color: #ff6a00;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      font-size: 1em;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 30px;
+      transition: background 0.3s;
+    }
 
-    button:hover {
-      background-color: #e65c00;
-    }
+    button:hover {
+      background-color: #e65c00;
+    }
 
-    .progress-container {
-      width: 100%;
-      height: 20px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.3);
-      overflow: hidden;
-      display: none;
-      margin-top: 30px;
-    }
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      overflow: hidden;
+      display: none;
+      margin-top: 30px;
+    }
 
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background-color: #ff6a00;
-      transition: width 0.3s ease;
-    }
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background-color: #ff6a00;
+      transition: width 0.3s ease;
+    }
 
-    .fallback {
-      display: none;
-      margin-top: 15px;
-      font-size: 0.9em;
-      color: #fff;
-      cursor: pointer;
-      text-decoration: underline;
-    }
-  </style>
+    .fallback {
+      display: none;
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #fff;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="installer-container">
-    <div>
-      <h1>Install MCStellar</h1>
-      <p>Get ready to install the best gaming experience on your PC. Click the button below to begin!</p>
-    </div>
+  <div class="installer-container">
+    <div>
+      <h1>Install MCStellar</h1>
+      <p>Get ready to install the best gaming experience on your PC. Click the button below to begin!</p>
+    </div>
 
-    <button id="downloadBtn" onclick="startDownload()">Download</button>
+    <button id="downloadBtn" onclick="startDownload()">Download</button>
 
-    <div class="progress-container" id="progressContainer">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
 
-    <div class="fallback" id="fallback" onclick="location.reload()">If the download didn't start, click here to try again.</div>
-  </div>
+    <div class="fallback" id="fallback" onclick="location.reload()">If the download didn't start, click here to try again.</div>
+  </div>
 
-  <script>
-    function startDownload() {
-      const progressBar = document.getElementById('progressBar');
-      const progressContainer = document.getElementById('progressContainer');
-      const fallback = document.getElementById('fallback');
-      const downloadBtn = document.getElementById('downloadBtn');
-      let progress = 0;
+  <script>
+    function startDownload() {
+      const progressBar = document.getElementById('progressBar');
+      const progressContainer = document.getElementById('progressContainer');
+      const fallback = document.getElementById('fallback');
+      const downloadBtn = document.getElementById('downloadBtn');
+      let progress = 0;
 
-      downloadBtn.style.display = 'none';
-      progressContainer.style.display = 'block';
+      downloadBtn.style.display = 'none';
+      progressContainer.style.display = 'block';
 
-      const interval = setInterval(() => {
-        progress += 100 / 12;
-        progressBar.style.width = `${progress}%`;
+      const interval = setInterval(() => {
+        progress += 100 / 12;
+        progressBar.style.width = `${progress}%`;
 
-        if (progress >= 100) {
-          clearInterval(interval);
+        if (progress >= 100) {
+          clearInterval(interval);
 
-          // Trigger fake download
-          const a = document.createElement('a');
-          a.href = 'ARCHIVO_CUSTOM_CON_CUSTOM_LINK'; // Reemplaza esto con el link real
-          a.download = 'Installer.exe';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
+          // Simulate file download
+          const a = document.createElement('a');
+          a.href = 'ARCHIVO_CUSTOM_CON_CUSTOM_LINK'; // <-- Reemplázalo con el link real
+          a.download = 'Installer.exe'; // <-- Nombre del archivo descargado
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
 
-          fallback.style.display = 'block';
-        }
-      }, 1000);
-    }
-  </script>
+          fallback.style.display = 'block';
+        }
+      }, 1000);
+    }
+  </script>
 
 </body>
 </html>
