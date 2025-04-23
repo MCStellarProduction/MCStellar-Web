@@ -103,6 +103,13 @@
   </div>
 
   <script>
+  const accounts = [
+    { username: "ElRedAguilarMC", password: "Luis201030" },
+    { username: "user1", password: "1234" },
+    { username: "mcstellar", password: "stellarpass" }
+    // Agrega más cuentas aquí
+  ];
+
   async function validateSession() {
     const cookies = document.cookie.split(';').reduce((acc, c) => {
       const [key, value] = c.trim().split('=');
@@ -111,53 +118,33 @@
     }, {});
 
     if (cookies.loggedIn === "true" && cookies.username) {
-      try {
-        const response = await fetch("accounts.json", { cache: "no-store" }); // Evita usar cache
-        const accounts = await response.json();
-
-        const isValidUser = accounts.some(acc => acc.username === cookies.username);
-
-        if (isValidUser) {
-          window.location.href = "https://www.mcstellar.lat/home";
-        } else {
-          document.cookie = "loggedIn=; path=/; max-age=0";
-          document.cookie = "username=; path=/; max-age=0";
-        }
-      } catch (err) {
-        console.error("Failed to validate user session", err);
+      const isValidUser = accounts.some(acc => acc.username === cookies.username);
+      if (isValidUser) {
+        window.location.href = "https://www.mcstellar.lat/home";
+      } else {
+        document.cookie = "loggedIn=; path=/; max-age=0";
+        document.cookie = "username=; path=/; max-age=0";
       }
     }
   }
 
   window.onload = validateSession;
-    // Redirige automáticamente si ya está logueado
-    if (document.cookie.includes("loggedIn=true")) {
+
+  document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const user = accounts.find(acc => acc.username === username && acc.password === password);
+
+    if (user) {
+      document.cookie = "loggedIn=true; path=/; max-age=604800";
+      document.cookie = `username=${username}; path=/; max-age=604800`;
       window.location.href = "https://www.mcstellar.lat/home";
+    } else {
+      alert("Invalid credentials!");
     }
-
-    document.getElementById("loginForm").addEventListener("submit", async function (e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      try {
-        const response = await fetch("accounts.json");
-        const accounts = await response.json();
-
-        const user = accounts.find(acc => acc.username === username && acc.password === password);
-
-        if (user) {
-          document.cookie = "loggedIn=true; path=/; max-age=604800"; // 7 days
-          document.cookie = `username=${username}; path=/; max-age=604800`;
-          window.location.href = "https://www.mcstellar.lat/home";
-        } else {
-          alert("Invalid credentials!");
-        }
-      } catch (error) {
-        console.error("Error loading accounts:", error);
-        alert("Could not load user data.");
-      }
-    });
+  });
   </script>
 </body>
 </html>
