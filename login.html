@@ -103,6 +103,33 @@
   </div>
 
   <script>
+  async function validateSession() {
+    const cookies = document.cookie.split(';').reduce((acc, c) => {
+      const [key, value] = c.trim().split('=');
+      acc[key] = value;
+      return acc;
+    }, {});
+
+    if (cookies.loggedIn === "true" && cookies.username) {
+      try {
+        const response = await fetch("accounts.json", { cache: "no-store" }); // Evita usar cache
+        const accounts = await response.json();
+
+        const isValidUser = accounts.some(acc => acc.username === cookies.username);
+
+        if (isValidUser) {
+          window.location.href = "https://www.mcstellar.lat/home";
+        } else {
+          document.cookie = "loggedIn=; path=/; max-age=0";
+          document.cookie = "username=; path=/; max-age=0";
+        }
+      } catch (err) {
+        console.error("Failed to validate user session", err);
+      }
+    }
+  }
+
+  window.onload = validateSession;
     // Redirige automáticamente si ya está logueado
     if (document.cookie.includes("loggedIn=true")) {
       window.location.href = "https://www.mcstellar.lat/home";
