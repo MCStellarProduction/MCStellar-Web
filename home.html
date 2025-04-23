@@ -126,6 +126,8 @@
   </header>
 
   <main>
+    <div id="welcomeMessage"></div>
+    
     <!-- EVENT BLOCK EXAMPLE -->
     <div class="event-block" onclick="redirectWithAnimation(this, 'LINK_CUSTOM')">
       <img src="evento1.jpg" alt="Event Image" />
@@ -140,24 +142,34 @@
   </main>
 
   <script>
+  // Función para obtener una cookie
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  function redirectWithAnimation(el, baseUrl) {
-    const username = getCookie("username") || "guest"; // fallback
-    const url = `${baseUrl}?user=${encodeURIComponent(username)}`;
-
-    el.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-    el.style.transform = "scale(0.95)";
-    el.style.opacity = "0.5";
-
-    setTimeout(() => {
-      window.location.href = url;
-    }, 300);
+  // Redirigir al usuario con el nombre de la cookie
+  function redirectWithUsername() {
+    const username = getCookie("username") || "guest";
+    const currentUrl = window.location.href.split('?')[0]; // Eliminar cualquier query existente
+    window.location.href = `${currentUrl}?user=${encodeURIComponent(username)}`;
   }
+
+  // Redirigir si ya hay una cookie
+  if (document.cookie.includes("username")) {
+    redirectWithUsername(); // Añadir el nombre de usuario a la URL
+  }
+
+  // Verificar si ya estamos logueados y mostrar información si es necesario
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('user');
+
+    if (username) {
+      document.getElementById("welcomeMessage").innerText = `Welcome, ${username}!`;
+    }
+  };
   </script>
 </body>
 </html>
