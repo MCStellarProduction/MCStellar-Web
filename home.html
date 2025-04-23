@@ -154,10 +154,15 @@
     window.location.href = `${currentUrl}?user=${encodeURIComponent(username)}`;
   }
 
-  // Redirigir si ya hay una cookie
   if (document.cookie.includes("username")) {
-    redirectWithUsername(); // Añadir el nombre de usuario a la URL
+  const currentUrl = window.location.href;
+  const hasUserParam = currentUrl.includes("?user=");
+
+  if (!hasUserParam) {
+    redirectWithUsername(); // Solo redirige si no tiene ya el ?user=
   }
+}
+
 
   // Verificar si ya estamos logueados y mostrar información si es necesario
   window.onload = function() {
