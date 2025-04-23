@@ -1,147 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>MCStellar Production</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gamer Launcher</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Orbitron', sans-serif;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      background-color: #0f0f0f;
+      color: #fff;
+    }
 
-        header, section, footer {
-            width: 95%; /* Más ancho para celulares */
-            max-width: 800px;
-            margin: 20px 0;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            text-align: center;
-        }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
 
-        nav {
-            background-color: white;
-            border-radius: 20px;
-            padding: 10px;
-            margin: 20px auto;
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    .launcher {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 30px;
+      backdrop-filter: blur(10px);
+    }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            justify-content: space-around;
-        }
+    .title {
+      font-size: 3em;
+      color: #00ffd5;
+      text-shadow: 0 0 10px #00ffd5;
+      transition: all 0.3s ease;
+    }
 
-        nav li {
-            margin: 0;
-        }
+    .button {
+      padding: 15px 40px;
+      font-size: 1.2em;
+      background: linear-gradient(135deg, #00ffd5, #007fff);
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(0, 255, 213, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
 
-        nav a {
-            text-decoration: none;
-            color: #1a73e8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        nav img {
-            width: 30px;
-            height: 30px;
-            margin-bottom: 5px;
-        }
-
-        .proyecto {
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-
-        /* Media query para pantallas más grandes (computadoras) */
-        @media (min-width: 600px) {
-            header, section, footer {
-                width: 70%; /* Menos ancho para computadoras */
-            }
-
-            nav {
-                position: sticky;
-                top: 20px;
-                margin: 20px auto;
-            }
-        }
-
-        /* Media query para celulares */
-        @media (max-width: 599px) {
-            nav {
-                position: fixed;
-                bottom: 20px;
-                margin: 0 auto;
-            }
-        }
-    </style>
+    .button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0, 255, 213, 0.9);
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#inicio"><img src="home-icon.png" alt="Home">Inicio</a></li>
-            <li><a href="#noticias"><img src="news-icon.png" alt="Noticias">Noticias</a></li>
-            <li><a href="#social"><img src="social-icon.png" alt="Social Media">Social Media</a></li>
-        </ul>
-    </nav>
+  <div class="launcher">
+    <h1 class="title">GAMER LAUNCHER</h1>
+    <button class="button" onclick="launchGame()">Iniciar Juego</button>
+  </div>
 
-    <header>
-        <h1>MCStellar Production</h1>
-    </header>
+  <!-- Three.js para WebGL -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
+  <script>
+    // Configurar escena 3D de fondo
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-    <section id="inicio">
-        <h2>Bienvenido a MCStellar Production</h2>
-        <p>Somos una empresa dedicada a la producción de contenido audiovisual de alta calidad.</p>
-    </section>
+    const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+    const material = new THREE.MeshStandardMaterial({ color: 0x00ffd5, wireframe: true });
+    const knot = new THREE.Mesh(geometry, material);
+    scene.add(knot);
 
-    <section id="servicios">
-        <h2>Nuestros Servicios</h2>
-        <ul>
-            <li>Producción de videos corporativos</li>
-            <li>Producción de comerciales</li>
-            <li>Producción de videos musicales</li>
-            <li>Fotografía profesional</li>
-        </ul>
-    </section>
+    const light = new THREE.PointLight(0x00ffd5, 1, 100);
+    light.position.set(50, 50, 50);
+    scene.add(light);
 
-    <section id="proyectos">
-        <h2>Nuestros Proyectos</h2>
-        <div class="proyecto">
-            <h3>Proyecto 1</h3>
-            <p>Descripción del proyecto 1.</p>
-        </div>
-        <div class="proyecto">
-            <h3>Proyecto 2</h3>
-            <p>Descripción del proyecto 2.</p>
-        </div>
-    </section>
+    camera.position.z = 30;
 
-    <section id="contacto">
-        <h2>Contacto</h2>
-        <p>Puedes contactarnos a través de:</p>
-        <ul>
-            <li>Email: info@mcstellarproduction.com</li>
-            <li>Teléfono: +1 123 456 7890</li>
-        </ul>
-    </section>
+    const animate = () => {
+      requestAnimationFrame(animate);
+      knot.rotation.x += 0.005;
+      knot.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    };
+    animate();
 
-    <footer>
-        <p>© 2023 MCStellar Production</p>
-    </footer>
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    function launchGame() {
+      alert("Iniciando juego... (aquí se integraría el juego o el ejecutable)");
+      // Aquí podrías integrar una llamada a una app Electron, API o juego
+    }
+  </script>
 </body>
 </html>
