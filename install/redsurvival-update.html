@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Custom Download Page</title>
+  <title>REDSURVIVAL OFFICIAL</title>
   <style>
     @font-face {
-      font-family: 'Retro Floral';
-      src: url('../Retro Floral.ttf') format('truetype');
+      font-family: 'RetroFloral';
+      src: url('Retro Floral.ttf') format('truetype');
     }
 
     * {
@@ -20,8 +20,8 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: 'Retro Floral', sans-serif;
-      background: url('background.jpg') no-repeat center center fixed;
+      font-family: 'RetroFloral', sans-serif;
+      background: url('your-background.jpg') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -38,6 +38,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
+      transition: all 0.5s ease;
     }
 
     .title {
@@ -46,21 +47,29 @@
       margin-bottom: 20px;
       text-align: center;
       font-weight: bold;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
     }
 
     .download-btn {
-      font-size: 16px; /* reducido a 50% aprox */
+      font-size: 16px;
       padding: 6px 12px;
       background: #ffffffcc;
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #eeeeee;
+      transform: scale(1.05);
     }
 
     .progress-container {
       display: none;
       width: 90%;
-      height: 10px; /* más delgada */
+      height: 10px;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 10px;
       overflow: hidden;
@@ -71,7 +80,7 @@
       height: 100%;
       width: 0;
       background: #00ffcc;
-      transition: width 1s;
+      transition: width 1s ease-in-out;
     }
 
     .retry-text {
@@ -80,6 +89,14 @@
       color: white;
       cursor: pointer;
       text-decoration: underline;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -93,11 +110,15 @@
     <div class="retry-text">If the file didn't download, click here</div>
   </div>
 
+  <!-- Hidden anchor to trigger download -->
+  <a id="downloadLink" href="ARCHIVO_CUSTOM.zip" download style="display:none;"></a>
+
   <script>
     const button = document.querySelector('.download-btn');
     const progressContainer = document.querySelector('.progress-container');
     const progressBar = document.querySelector('.progress-bar');
     const retryText = document.querySelector('.retry-text');
+    const downloadLink = document.getElementById('downloadLink');
 
     button.addEventListener('click', () => {
       button.style.display = 'none';
@@ -105,13 +126,22 @@
 
       const seconds = Math.floor(Math.random() * 9) + 6;
       let progress = 0;
+
       const interval = setInterval(() => {
         progress++;
         progressBar.style.width = (progress / seconds * 100) + '%';
 
         if (progress >= seconds) {
           clearInterval(interval);
+
+          // Trigger download
+          downloadLink.click();
+
+          // Show retry text with fade-in
           retryText.style.display = 'block';
+          setTimeout(() => {
+            retryText.style.opacity = '1';
+          }, 100);
         }
       }, 1000);
     });
