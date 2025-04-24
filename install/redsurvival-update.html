@@ -111,7 +111,8 @@
   </div>
 
   <!-- Hidden anchor to trigger download -->
-  <a id="downloadLink" href="ARCHIVO_CUSTOM.zip" download style="display:none;"></a>
+  <a id="downloadLink" href="ARCHIVO_CUSTOM.zip" download="ARCHIVO_CUSTOM.zip" style="display: none;"></a>
+
 
   <script>
     const button = document.querySelector('.download-btn');
@@ -134,8 +135,11 @@
         if (progress >= seconds) {
           clearInterval(interval);
 
-          // Trigger download
-          downloadLink.click();
+          // Trigger download with a click
+setTimeout(() => {
+  downloadLink.click();
+}, 200); // Pequeña pausa para asegurarse que el DOM lo procesa bien
+
 
           // Show retry text with fade-in
           retryText.style.display = 'block';
