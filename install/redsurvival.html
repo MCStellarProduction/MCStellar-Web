@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RedSurvival Installer</title>
+  <meta charset="UTF-8">
+  <title>REDSURVIVAL OFFICIAL</title>
   <link rel="icon" href="../icon/redsurvival-ico.png" type="image/png">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <style>
     @font-face {
       font-family: 'Retro Floral';
@@ -13,140 +11,149 @@
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+      user-select: none;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       font-family: 'Retro Floral', sans-serif;
-      background: url('background.jpg') no-repeat center center/cover;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
 
-    .installer-container {
-      width: 100vw;
-      max-width: 700px;
-      height: 60vh;
-      background: rgba(255, 255, 255, 0.1);
+    .bottom-box {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50vw;
+      aspect-ratio: 16 / 9;
       backdrop-filter: blur(10px);
-      border: 2px solid white;
-      border-radius: 20px;
-      padding: 40px 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      text-align: center;
+      justify-content: center;
+      padding: 20px;
+      transition: all 0.5s ease;
     }
 
-    h1 {
-      font-size: 2.5em;
-      color: #fff;
-      text-shadow: 1px 1px 5px #ff6a00;
-    }
-
-    p {
-      font-size: 1.2em;
-      color: #eee;
-      margin-top: 10px;
-    }
-
-    button {
-      background-color: #ff6a00;
-      border: none;
+    .title {
       color: white;
-      padding: 15px 30px;
-      font-size: 1em;
-      border-radius: 10px;
-      cursor: pointer;
-      margin-top: 30px;
-      transition: background 0.3s;
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      opacity: 0;
+      animation: fadeIn 1s ease-in-out forwards;
     }
 
-    button:hover {
-      background-color: #e65c00;
+    .download-btn {
+      font-size: 16px;
+      padding: 6px 12px;
+      background: #ffffffcc;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: #eeeeee;
+      transform: scale(1.05);
     }
 
     .progress-container {
-      width: 100%;
-      height: 20px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.3);
-      overflow: hidden;
       display: none;
-      margin-top: 30px;
+      width: 90%;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 20px;
     }
 
     .progress-bar {
       height: 100%;
-      width: 0%;
-      background-color: #ff6a00;
-      transition: width 0.3s ease;
+      width: 0;
+      background: #00ffcc;
+      transition: width 1s ease-in-out;
     }
 
-    .fallback {
+    .retry-text {
       display: none;
       margin-top: 15px;
-      font-size: 0.9em;
-      color: #fff;
+      color: white;
       cursor: pointer;
       text-decoration: underline;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="installer-container">
-    <div>
-      <h1>Install REDSURVIVAL</h1>
-      <p>Here you can Download the REDSURVIVAL ModPack. Click the button below to begin!</p>
+  <div class="bottom-box">
+    <div class="title">REDSURVIVAL OFFICIAL</div>
+    <button class="download-btn">Download</button>
+    <div class="progress-container">
+      <div class="progress-bar"></div>
     </div>
-
-    <button id="downloadBtn" onclick="startDownload()">Download</button>
-
-    <div class="progress-container" id="progressContainer">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <div class="fallback" id="fallback" onclick="location.reload()">If the download didn't start, click here to try again.</div>
+    <div class="retry-text">If the file didn't download, click here</div>
   </div>
 
-  <script>
-    function startDownload() {
-      const progressBar = document.getElementById('progressBar');
-      const progressContainer = document.getElementById('progressContainer');
-      const fallback = document.getElementById('fallback');
-      const downloadBtn = document.getElementById('downloadBtn');
-      let progress = 0;
+  <!-- Hidden anchor to trigger download -->
+  <a id="downloadLink" href="ARCHIVO_CUSTOM.zip" download="ARCHIVO_CUSTOM.zip" style="display: none;"></a>
 
-      downloadBtn.style.display = 'none';
+
+  <script>
+    const button = document.querySelector('.download-btn');
+    const progressContainer = document.querySelector('.progress-container');
+    const progressBar = document.querySelector('.progress-bar');
+    const retryText = document.querySelector('.retry-text');
+    const downloadLink = document.getElementById('downloadLink');
+
+    button.addEventListener('click', () => {
+      button.style.display = 'none';
       progressContainer.style.display = 'block';
 
-      const interval = setInterval(() => {
-        progress += 100 / 12;
-        progressBar.style.width = `${progress}%`;
+      const seconds = Math.floor(Math.random() * 9) + 6;
+      let progress = 0;
 
-        if (progress >= 100) {
+      const interval = setInterval(() => {
+        progress++;
+        progressBar.style.width = (progress / seconds * 100) + '%';
+
+        if (progress >= seconds) {
           clearInterval(interval);
 
-          // Simulate file download
-          const a = document.createElement('a');
-          a.href = 'ARCHIVO_CUSTOM_CON_CUSTOM_LINK'; // <-- Reemplázalo con el link real
-          a.download = 'Installer.exe'; // <-- Nombre del archivo descargado
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
+          // Trigger download with a click
+setTimeout(() => {
+  downloadLink.click();
+}, 200); // Pequeña pausa para asegurarse que el DOM lo procesa bien
 
-          fallback.style.display = 'block';
+
+          // Show retry text with fade-in
+          retryText.style.display = 'block';
+          setTimeout(() => {
+            retryText.style.opacity = '1';
+          }, 100);
         }
       }, 1000);
-    }
-  </script>
+    });
 
+    retryText.addEventListener('click', () => {
+      location.reload();
+    });
+  </script>
 </body>
 </html>
